@@ -1,0 +1,62 @@
+# ENTWURF für den Stack "website-itmitkopf" auf vps01 (Dockhand-Umgebung 2). NICHT angewendet.
+# Änderungen gegenüber dem laufenden Stack:
+#   + Service git-sync (zieht main alle 60 Minuten, atomar per Symlink)
+#   ~ nginx: Webroot kommt aus dem git-sync-Volume, eigene Konfiguration, Log-Rotation
+#   Traefik-Labels, Netzwerk und Image von nginx bleiben unverändert.
+services:
+  git-sync:
+    container_name: git-sync-itmitkopf
+    image: registry.k8s.io/git-sync/git-sync:v4.8.0
+    restart: unless-stopped
+    user: "65533:65533"
+    command:
+      - --repo=https://github.com/virtualben89/itmitkopf-website.git
+      - --ref=main
+      - --period=3600s
+      - --root=/git
+      - --link=current
+      - --depth=1
+      - --http-bind=
+    volumes:
+      - site:/git
+    logging:
+      driver: json-file
+      options: { max-size: "1m", max-file: "3" }
+    networks: [default]
+
+  nginx-itmitkopf:
+    container_name: nginx-itmitkopf
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    depends_on: [git-sync]
+    volumes:
+      - site:/srv/git:ro
+      - /opt/containers/website-itmitkopf-conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+    logging:
+      driver: json-file
+      options: { max-size: "1m", max-file: "3" }
+    labels:
+      # unverändert aus dem laufenden Stack übernommen
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.nginx-itmitkopf.entrypoints=http"
+      - "traefik.http.routers.nginx-itmitkopf.rule=Host(`itmitkopf.de`) || Host(`www.itmitkopf.de`)"
+      - "traefik.http.middlewares.nginx-itmitkopf-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.nginx-itmitkopf.middlewares=redirect-http-www@file,redirect-https-www@file"
+      - "traefik.http.routers.nginx-itmitkopf-secure.entrypoints=https"
+      - "traefik.http.routers.nginx-itmitkopf-secure.rule=Host(`itmitkopf.de`) || Host(`www.itmitkopf.de`)"
+      - "traefik.http.routers.nginx-itmitkopf-secure.tls=true"
+      - "traefik.http.routers.nginx-itmitkopf-secure.tls.certresolver=http"
+      - "traefik.http.routers.nginx-itmitkopf-secure.service=nginx-itmitkopf"
+      - "traefik.http.services.nginx-itmitkopf.loadbalancer.server.port=80"
+      - "traefik.http.routers.nginx-itmitkopf-secure.middlewares=secHeaders@file"
+    networks:
+      - proxy
+      - default
+
+volumes:
+  site:
+
+networks:
+  proxy:
+    external: true
