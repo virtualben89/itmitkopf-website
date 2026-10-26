@@ -14,7 +14,7 @@
 ## Fakten
 
 - Angebot: IT-Unterstützung im Tagesgeschäft, IT-Beratung, Umrüstung und Neuaufbau von IT-Infrastrukturen
-- Themenfelder: Virtualisierung (Proxmox VE, Proxmox Backup Server), NAS-Systeme, Netzwerke (UniFi, TP-Link Omada), Überwachung (UniFi Protect), Zutrittskontrolle (UniFi Access), Linux, Windows, Drucker, Scanner, Smart Office, Home Assistant, KI-Agenten
+- Themenfelder: Virtualisierung (Proxmox VE, Proxmox Backup Server), NAS-Systeme, Netzwerke (UniFi Network, TP-Link Omada), IT-Sicherheit, Überwachung (UniFi Protect), Zutrittskontrolle (UniFi Access), Linux, Windows, Drucker, Scanner, Smart Office, Home Assistant, KI-Agenten
 - Zielgruppe: kleine Firmen und Selbstständige
 - Einsatzgebiet: Leipzig, remote auf Anfrage
 - Kontakt: info@itmitkopf.de, +49 151 70119866
