@@ -1,0 +1,44 @@
+# TESTSTACK "website-itmitkopf-test" auf vps01 (Dockhand-Umgebung 2). NICHT angewendet.
+# Zweck: git-sync, Volume-Rechte, Nginx-Konfiguration und Redirects prüfen, bevor die Produktion angefasst wird.
+# Ohne Traefik-Labels, also nicht öffentlich erreichbar. Im Docker-Netz "proxy" nur per Containername
+# (http://nginx-itmitkopf-test/) erreichbar. Zieht den Branch feat/initial-site. Wird nach dem Test gelöscht.
+services:
+  git-sync-itmitkopf-test:
+    container_name: git-sync-itmitkopf-test
+    image: registry.k8s.io/git-sync/git-sync:v4.8.0
+    restart: "no"
+    user: "65533:65533"
+    command:
+      - --repo=https://github.com/virtualben89/itmitkopf-website.git
+      - --ref=feat/initial-site
+      - --period=60s
+      - --root=/git
+      - --link=current
+      - --depth=1
+    volumes:
+      - site-test:/git
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    logging:
+      driver: json-file
+      options: { max-size: "1m", max-file: "3" }
+
+  nginx-itmitkopf-test:
+    container_name: nginx-itmitkopf-test
+    image: nginx:stable-alpine
+    restart: "no"
+    depends_on: [git-sync-itmitkopf-test]
+    volumes:
+      - site-test:/srv/git:ro
+      - /opt/containers/hawser/itmitkopf-conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+    logging:
+      driver: json-file
+      options: { max-size: "1m", max-file: "3" }
+    networks: [proxy]
+
+volumes:
+  site-test:
+
+networks:
+  proxy:
+    external: true

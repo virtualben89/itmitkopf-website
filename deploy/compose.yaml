@@ -16,13 +16,13 @@ services:
       - --root=/git
       - --link=current
       - --depth=1
-      - --http-bind=
     volumes:
       - site:/git
     logging:
       driver: json-file
       options: { max-size: "1m", max-file: "3" }
-    networks: [default]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
 
   nginx-itmitkopf:
     container_name: nginx-itmitkopf
@@ -31,7 +31,7 @@ services:
     depends_on: [git-sync]
     volumes:
       - site:/srv/git:ro
-      - /opt/containers/website-itmitkopf-conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - /opt/containers/hawser/itmitkopf-conf/default.conf:/etc/nginx/conf.d/default.conf:ro
     logging:
       driver: json-file
       options: { max-size: "1m", max-file: "3" }
@@ -52,7 +52,6 @@ services:
       - "traefik.http.routers.nginx-itmitkopf-secure.middlewares=secHeaders@file"
     networks:
       - proxy
-      - default
 
 volumes:
   site:
