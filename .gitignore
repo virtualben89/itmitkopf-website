@@ -1,0 +1,16 @@
+# Secrets / local
+.env
+.env.*
+*.key
+*.pem
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+# Python / node tooling for brand assets
+__pycache__/
+*.pyc
+node_modules/
+.venv/

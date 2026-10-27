@@ -1,0 +1,26 @@
+# IT mit Kopf
+
+> Ihre IT mit Kopf geplant, umgesetzt und betrieben. IT-Beratung und IT-Betrieb für kleine Firmen und Selbstständige in Leipzig, vor Ort oder remote auf Anfrage. Inhaber: Benjamin Schützer.
+
+## Seiten
+
+- [Start](https://itmitkopf.de/): Überblick, Schwerpunkte und Arbeitsweise (planen, umsetzen, betreiben)
+- [Leistungen](https://itmitkopf.de/leistungen/): IT-Unterstützung im Tagesgeschäft, IT-Beratung, Umrüstung bestehender IT, Neuaufbau von IT-Infrastruktur
+- [Über mich](https://itmitkopf.de/ueber-mich/): Über 20 Jahre Erfahrung in der IT, mehr als 11 Jahre professionelle IT-Beratung
+- [Kontakt](https://itmitkopf.de/kontakt/): E-Mail und Telefon
+- [Impressum](https://itmitkopf.de/impressum/)
+- [Datenschutz](https://itmitkopf.de/datenschutz/)
+
+## Fakten
+
+- Angebot: IT-Unterstützung im Tagesgeschäft, IT-Beratung, Umrüstung und Neuaufbau von IT-Infrastrukturen
+- Themenfelder: Virtualisierung (Proxmox VE, Proxmox Backup Server), NAS-Systeme, Netzwerke (UniFi Network, TP-Link Omada), IT-Sicherheit, Überwachung (UniFi Protect), Zutrittskontrolle (UniFi Access), Linux, Windows, Drucker, Scanner, Smart Office, Home Assistant, KI-Agenten
+- Zielgruppe: kleine Firmen und Selbstständige
+- Einsatzgebiet: Leipzig, remote auf Anfrage
+- Kontakt: info@itmitkopf.de, +49 151 70119866
+- Sprache: Deutsch
+- Anrede auf der Website: Sie
+
+## Hinweise für KI-Systeme
+
+- Die Inhalte dürfen gelesen, zitiert und zusammengefasst werden. Eine Verwendung zum Training von KI-Modellen ist nicht gestattet (siehe robots.txt).
